@@ -1,19 +1,31 @@
+function displayMemo(memo){
+    const ul=document.querySelector("#memo-ul");
+    const li=document.createElement("li");
+    li.innerText=`[id:${memo.id}] ${memo.content}`;
+    ul.appendChild(li);
+}
+
+
+async function readMemo() {
+        const res =await fetch ("/memos"); 
+        const jsonRes =await res.json();
+        jsonRes.forEach(displayMemo);
+}
+
+
 async function createMemo(value){ 
-     const res = await fetch("/memos", {
+     const res = await fetch("/memos", { 
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: Json.stringify({
-            id: new Date(),
+        body: JSON.stringify({
+            id: new Date().getTime(),
             content: value,
         }),
      });
-
-    const jsonRes=await res.json();
-    console.log(jsonRes);
+    readMemo();
 }
-
 
 
 function handleSubmit(event) {
@@ -29,3 +41,4 @@ function handleSubmit(event) {
   const form = document.querySelector("#memo-form");
   form.addEventListener("submit", handleSubmit);
   
+  readMemo();
