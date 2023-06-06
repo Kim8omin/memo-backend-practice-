@@ -9,6 +9,8 @@ function displayMemo(memo){
 async function readMemo() {
         const res =await fetch ("/memos"); 
         const jsonRes =await res.json();
+        const ul=document.querySelector("memo-ul");
+        ul.innerText="";
         jsonRes.forEach(displayMemo);
 }
 
